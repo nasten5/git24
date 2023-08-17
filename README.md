@@ -1,34 +1,44 @@
 HomeWork6
-mport java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
-
-public class PriorityQueueExample {
-public static void main(String[] args) {
-
-Queue<Integer> queueL = new LinkedList<>();
-for (int i = 5; i > 0; i--) {
-queueL.add(i);
+public class PriorityQueue { 
+ 
+    private Node head; 
+ 
+    private class Node { 
+ 
+        int value;  
+        int priority; 
+        Node next; 
+         
+        public Node(int value, int priority) { 
+            this.value = value; 
+            this.priority = priority; 
+        } 
+    } 
+     
+    // Добавляет элемент в очередь с приоритетом  
+    public void add(int value, int priority) { 
+         
+        Node newNode = new Node(value, priority); 
+         
+        if (head == null || priority < head.priority) { 
+            newNode.next = head; 
+            head = newNode; 
+        } 
+        else { 
+            Node current = head; 
+            while (current.next != null && current.next.priority <= priority) { 
+                current = current.next;     
+            } 
+            newNode.next = current.next; 
+            current.next = newNode; 
+        } 
+    } 
+     
+    // Удаляет элемент с наивысшим приоритетом 
+    public int remove() { 
+         
+        int value = head.value; 
+        head = head.next; 
+        return value;    
+    } 
 }
-System.out.println("Print our LinkedList Queue (FIFO): " + queueL);
-Queue<Integer> priorityQueue = new PriorityQueue<>();
-
-for (int i = 5; i > 0; i--) {
-priorityQueue.offer(i);
-}
-
-System.out.println("PriorityQueue printing (by iterating, no elements removing): " + priorityQueue);
-System.out.println("Print PriorityQueue using poll() (by retrieval): " );
-while (!priorityQueue.isEmpty()) {
-System.out.println(priorityQueue.poll());
-}
-}
-}
-Print our LinkedList Queue (FIFO): [5, 4, 3, 2, 1]
-PriorityQueue printing (by iterating, no elements removing): [1, 2, 4, 5, 3]
-Print our PriorityQueue using poll() (by retrieval):
-1
-2
-3
-4
-5
